@@ -3,6 +3,7 @@
 /results/figures/
 /results/h_results/
 /results/u_input/
+/results/latex_export/
 
 Manifest.toml
 /docs/*

@@ -30,7 +30,7 @@ for (n, iter) in enumerate(idx_grid)
 end
 
 
-w = 2.0;
+w =  2.0;
 using FastGaussQuadrature
 T = 1000;
 bump(t) = exp(-1 / (t/T - (t/T)^2)^w)
@@ -61,44 +61,3 @@ open(path_u_st, "w") do io
     writedlm(io, u_st)
 end
 
-
-using CairoMakie
-J = 1000;   
-tgrid = T/J : T/J : T-T/J;
-
-begin
-    fig1 = Figure(size=(800,600), fontsize=26)
-    ax1 = Axis(fig1[1, 1], xlabel = "Time t in [s]", ylabel = L"Input u $\times 10^5$", 
-        xlabelsize = 30, ylabelsize = 30,  xgridstyle = :dash, ygridstyle = :dash, 
-        xtickalign = 1., xticksize = 10, 
-        xminorgridvisible = true, xminorticksvisible = true, xminortickalign = 1,
-        yminorgridvisible = true, yminorticksvisible = true, yminortickalign = 1,
-        ytickalign = 1, yticksize = 10, xlabelpadding = 0)
-    
-    u_al_scaled = u_al * 1e-5;
-    ax1.xticks = 0 : 100 : T;
-    ax1.yticks = 0 : 1 : 5;
-    lines!(tgrid, u_al_scaled;linewidth = 3)
-    fig1
-    save("results/figures/"*path_al*".pdf", fig1, pt_per_unit = 1)
-end
-
-begin
-    fig2 = Figure(size=(800,600), fontsize=26)
-    ax2 = Axis(fig2[1, 1], xlabel = "Time t in [s]", ylabel = L"Input u $\times 10^6$", 
-        xlabelsize = 30, ylabelsize = 30,
-        xgridstyle = :dash, ygridstyle = :dash, 
-        xtickalign = 1., xticksize = 10, 
-        xminorgridvisible = true, xminorticksvisible = true, xminortickalign = 1,
-        yminorgridvisible = true, yminorticksvisible = true, yminortickalign = 1,
-        ytickalign = 1, yticksize = 10, xlabelpadding = 0)
-    
-
-    u_st_scaled = u_st * 1e-6;
-    ax2.xticks = 0 : 100 : T;
-    ax2.yticks = -8 : 2 : 8;
-    lines!(tgrid, u_st_scaled;linewidth = 3)
-    fig2
-    
-    save("results/figures/"*path_st*".pdf", fig2, pt_per_unit = 1)    
-end
